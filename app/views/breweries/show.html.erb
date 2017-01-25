@@ -17,4 +17,12 @@
 <%= link_to 'Edit', edit_brewery_path(@brewery) %> |
 <%= link_to 'Back', breweries_path %>
 
+<p>
+  <% if @brewery.ratings.count == 0 %>
+  This brewery has no ratings.
+  <% else %>
+  Has <%=pluralize(@brewery.ratings.count, 'rating')%>, average <%=@brewery.average_rating %>
+  <%end%>
+</p>
+
 <p> <%= link_to 'List of beers', beers_path %> </p>
