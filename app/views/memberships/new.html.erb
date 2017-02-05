@@ -1,0 +1,6 @@
+<h1>New Membership</h1>
+
+<%= form_for(@membership) do |f| %>
+  Select a beer club: <%= f.select :beer_club_id, options_from_collection_for_select(@beer_clubs - current_user.beer_clubs | current_user.beer_clubs - @beer_clubs, :id, :to_s) %>
+  <%= f.submit %>
+<% end %>
