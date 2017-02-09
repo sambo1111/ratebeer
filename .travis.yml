@@ -1,0 +1,16 @@
+language: ruby
+rvm:
+- 2.3.0
+script:
+- bundle exec rake db:migrate --trace
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rspec -fd spec/
+deploy:
+  provider: heroku
+  api_key:
+    secure: 1LCMYp1Hod/qLBBspUFdJbVGU46K4RMbJJ08fb0DNnruBv0nU5kVG8s2XvKKs0YsX2xiCx35CEcaYthRv/pHrtJtsO/gpSCIWUywRY6MZchhyc5y4tF218+ci5Q1JD5hBMRoe5NO1mCbYXTbZ8XoPXWEMRSlV/r3fkyVYwoFW8ohmPbbYcopXYSfOQ9Qn87W7Suee+kwnVJtyNA/LrGNNHOyTzynSN/45UpbzQMsdnNl0zEHQgSPgpsXjv15acqpMbMEXiFNq00tYR94rQJYpvrn/vTE/UyYhlLQgrf0IxIlDOn4jTw1HxEy5mVF2G4CeX6HPi3rCoTHAWfE30dgl5QJWLEZobBFdZRoYw+O1i4NjplFbN44J09Xq10OJKGk6MbMJfnKdVTJF8tFAwWs3wVvwcD3g7gbAqc6qlcy6yWk169+Mg6No9SzoUHCU35pM9kVr/dlPA/quZPjxXTd5lt48t18fQ0j2VrDRtz2c2MsLhdsqDeJe8OGPqktBSZl/J77gkgT8oEUP5JUHPcxEjKha26kWQW3RaYNrzTF5GXeq2m2hAL6y9LadX7oMnAApXvHXPunA57ofFNCY7jrVog3KgxUAAgBYfecThQsWlX6pmc4KeEWswvRZ8kCXbEOv3pojaqIkb8E8F0SXFs9317JWhnrECtmmsGDqgdhmJg=
+  app: sheltered-lake-27168
+  on:
+    repo: sambo1111/ratebeer
+  run: "rake db:migrate"

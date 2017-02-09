@@ -8,7 +8,7 @@
     user has no ratings
   <% else %>
     has made <%= pluralize(@user.ratings.count, 'rating') %>
-    ratings, average: <%= @user.average_rating %>
+    average: <%= @user.average_rating %>
   <% end %>
 </p>
 
