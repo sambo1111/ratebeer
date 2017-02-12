@@ -35,6 +35,50 @@ RSpec.describe User, type: :model do
       expect(user.favorite_beer).to eq(best)
     end
   end
+  describe "favorite brewery" do
+      let(:user){FactoryGirl.create(:user)}
+
+      it "has method for determining the favorite brewery" do
+        expect(user).to respond_to(:favorite_brewery)
+      end
+
+      it "is the brewery with the highest average rating" do
+        brewery1 = FactoryGirl.create(:brewery, name:"Paras")
+        brewery2 = FactoryGirl.create(:brewery, name:"Huono")
+
+        beer1 = FactoryGirl.create(:beer, brewery: brewery2)
+        beer2 = FactoryGirl.create(:beer, brewery: brewery1)
+        beer3 = FactoryGirl.create(:beer, brewery: brewery1)
+
+        FactoryGirl.create(:rating, score:20, beer:beer1, user:user)
+        FactoryGirl.create(:rating, score:30, beer:beer2, user:user)
+        FactoryGirl.create(:rating, score:40, beer:beer3, user:user)
+
+        expect(user.favorite_brewery).to eq("Paras")
+
+      end
+
+  end
+
+  describe "favorie style" do
+    let(:user){FactoryGirl.create(:user)}
+
+    it "has method for determining the favorite style" do
+      expect(user).to respond_to(:favorite_style)
+    end
+
+    it "is the style with the highest average rating" do
+      beer1 = FactoryGirl.create(:beer, style:"Not Lager")
+      beer2 = FactoryGirl.create(:beer, style:"Not Lager")
+      beer3 = FactoryGirl.create(:beer, style:"Lager")
+
+      FactoryGirl.create(:rating, score:20, beer:beer1, user:user)
+      FactoryGirl.create(:rating, score:5, beer:beer2, user:user)
+      FactoryGirl.create(:rating, score:40, beer:beer3, user:user)
+
+      expect(user.favorite_style).to eq("Lager")
+    end
+  end
 
   describe "without a proper password" do
     it "is not saved if the password is too short" do

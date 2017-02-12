@@ -23,4 +23,8 @@ class Brewery < ActiveRecord::Base
 			 errors.add(:year, "Invalid year")
 		 end
 	end
+
+	def getname
+		self.name
+	end
 end

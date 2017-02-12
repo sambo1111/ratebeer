@@ -6,9 +6,11 @@ describe "Beers page" do
 
     before :each do
       FactoryGirl.create :brewery, name:"Koff"
+      FactoryGirl.create :user
     end
 
     it "is saved if given correct name" do
+      sign_in(username:"Pekka", password:"Foobar1")
       visit new_beer_path
       fill_in("Name", with:"kalja")
       select("Lager", from:"Style")
@@ -21,6 +23,7 @@ describe "Beers page" do
     end
 
     it "is not saved if given incorrect name" do
+      sign_in(username:"Pekka", password:"Foobar1")
       visit new_beer_path
       fill_in("Name", with:"")
       select("Lager", from:"Style")

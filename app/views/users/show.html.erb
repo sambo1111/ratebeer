@@ -9,6 +9,8 @@
   <% else %>
     has made <%= pluralize(@user.ratings.count, 'rating') %>
     average: <%= @user.average_rating %>
+    <p> favorite style: <%= @user.favorite_style %> <p>
+    <p> favorite brewery: <%= @user.favorite_brewery %> <p>
   <% end %>
 </p>
 

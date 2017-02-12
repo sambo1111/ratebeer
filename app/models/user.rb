@@ -17,4 +17,35 @@ class User < ActiveRecord::Base
     ratings.order(score: :desc).limit(1).first.beer
   end
 
+  def favorite_brewery
+    favorite_from_collection(self.ratings.group_by{|rat| rat.beer.brewery}).getname
+  end
+
+  def favorite_style
+    favorite_from_collection(self.ratings.group_by{|rat| rat.beer.style})
+  end
+
+  def favorite_from_collection(ratings)
+    r = ratings
+
+    highest = 0;
+    fav = "no favorite"
+    r.map do |k, v|
+      styles_average = average_for_collection(r[k])
+      if styles_average > highest
+        highest = styles_average
+        fav = k
+      end
+    end
+
+    fav
+  end
+
+  def average_for_collection(r)
+    sum = 0;
+    r.each do |e|
+      sum = sum + e.score
+    end
+    sum = sum / r.count
+  end
 end

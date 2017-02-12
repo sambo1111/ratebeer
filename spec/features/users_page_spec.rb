@@ -7,6 +7,34 @@ describe "User" do
     @user = FactoryGirl.create :user
   end
 
+  describe "any client" do
+    it "can see user's favorite style correctly" do
+      beer = FactoryGirl.create(:beer, name: "Kaljonki", style: "Lager")
+      beer2 = FactoryGirl.create(:beer, name: "Ei kaljonki", style: "Not Lager")
+      FactoryGirl.create(:rating, score:30, beer:beer, user:@user)
+      FactoryGirl.create(:rating, score:40, beer:beer, user:@user)
+      FactoryGirl.create(:rating, score:30, beer:beer2, user:@user)
+
+      visit user_path(@user)
+      expect(page).to have_content('favorite style: Lager')
+
+    end
+
+      it "can see user's favorite brewery correctly" do
+        brewery = FactoryGirl.create(:brewery, name: "Paras")
+        brewery2 = FactoryGirl.create(:brewery, name: "Huono")
+        beer = FactoryGirl.create(:beer, name: "Kaljonki", brewery:brewery, style: "Lager")
+        beer2 = FactoryGirl.create(:beer, name: "Ei kaljonki", brewery:brewery2, style: "Not Lager")
+        FactoryGirl.create(:rating, score:30, beer:beer, user:@user)
+        FactoryGirl.create(:rating, score:40, beer:beer, user:@user)
+        FactoryGirl.create(:rating, score:30, beer:beer2, user:@user)
+
+        visit user_path(@user)
+        expect(page).to have_content('favorite brewery: Paras')
+
+      end
+  end
+
   describe "who has signed up" do
     it "can signin with right credidentials" do
       sign_in(username:"Pekka", password:"Foobar1")
@@ -40,7 +68,7 @@ describe "User" do
       rating = FactoryGirl.create :rating, score:20, beer:beer, user:@user
 
       visit user_path(@user)
-      
+
       expect(page).to have_content("delete")
       expect{
         click_link("delete")
