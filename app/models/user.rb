@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def favorite_style
-    favorite_from_collection(self.ratings.group_by{|rat| rat.beer.style})
+    favorite_from_collection(self.ratings.group_by{|rat| rat.beer.style.name})
   end
 
   def favorite_from_collection(ratings)

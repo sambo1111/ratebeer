@@ -1,5 +1,24 @@
+<p id="notice"><%= notice %></p>
 <h1>New Beer</h1>
 
-<%= render 'form' %>
+<%= form_for(@beer) do |f| %>
+
+  <% if @beer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@beer.errors.count, "error") %> prohibited beer from being saved:</h2>
+
+      <ul>
+      <% @beer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p> Name <br> <%= f.text_field :name %> </p>
+  <p> Brewery <br> <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :getname, selected:@beer.brewery_id) %> </p>
+  <p> Style <br> <%= f.select :style_id, options_from_collection_for_select(@styles, :id, :to_s, selected:@beer.style_id) %> </p>
+  <p> <%= f.submit %> </p>
+<% end %>
 
 <%= link_to 'Back', beers_path %>

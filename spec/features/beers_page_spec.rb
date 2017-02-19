@@ -7,14 +7,15 @@ describe "Beers page" do
     before :each do
       FactoryGirl.create :brewery, name:"Koff"
       FactoryGirl.create :user
+      FactoryGirl.create :style
     end
 
     it "is saved if given correct name" do
       sign_in(username:"Pekka", password:"Foobar1")
       visit new_beer_path
-      fill_in("Name", with:"kalja")
-      select("Lager", from:"Style")
-      select("Koff", from:"Brewery")
+      fill_in("beer_name", with:"kalja")
+      select("Koff", from:"beer_brewery_id")
+      select("Lager", from:"beer_style_id")
 
       expect{
         click_button("Create Beer")
@@ -25,9 +26,9 @@ describe "Beers page" do
     it "is not saved if given incorrect name" do
       sign_in(username:"Pekka", password:"Foobar1")
       visit new_beer_path
-      fill_in("Name", with:"")
-      select("Lager", from:"Style")
-      select("Koff", from:"Brewery")
+      fill_in("beer_name", with:"")
+      select("Koff", from:"beer_brewery_id")
+      select("Lager", from:"beer_style_id")
       click_button("Create Beer")
 
       expect(Beer.count).to eq(0)

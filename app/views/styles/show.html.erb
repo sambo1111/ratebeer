@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<h1> <%= @style.name %> </h1>
+
+<p>
+  <%= @style.description %>
+</p>
+
+<h4> Beers </h4>
+
+<ul>
+  <% @style.beers.each do |b| %>
+    <li> <%= link_to b.name, beer_path(b) %>, by <%= link_to b.brewery.name, brewery_path(b.brewery) %> </li>
+  <% end %>
+</ul>
+
+<% if current_user %>
+  <%= link_to 'Edit', edit_style_path(@style) %> |
+  <%= link_to 'Destroy', @style, method: :delete, data: { confirm: 'Are you sure?' } %> |
+  <%= link_to 'Back', styles_path %>
+<% end %>

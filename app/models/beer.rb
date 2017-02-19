@@ -6,15 +6,8 @@ class Beer < ActiveRecord::Base
 	has_many :ratings, dependent: :destroy
 	has_many :raters, through: :ratings, source: :user
 	validates :name, length: {minimum: 1}
-	validates :style, length: {minimum: 1}
-	#def average_rating
-	#	sum = 0
-	#	ratings.each do |r|
-	#		sum = sum + r.score
-	#	end
-	#	sum = sum / ratings.count
-	#	"Has #{ratings.count} ratings, average #{sum}"
-	#end
+	validates :style, presence: true
+	belongs_to :style
 
 	def to_s
 		"#{name}, #{brewery.name}"

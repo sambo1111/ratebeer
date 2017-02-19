@@ -5,12 +5,14 @@ include Helpers
 describe "User" do
   before :each do
     @user = FactoryGirl.create :user
+    @style1 = FactoryGirl.create :style
+    @style2 = FactoryGirl.create :style, name:"Not Lager"
   end
 
   describe "any client" do
     it "can see user's favorite style correctly" do
-      beer = FactoryGirl.create(:beer, name: "Kaljonki", style: "Lager")
-      beer2 = FactoryGirl.create(:beer, name: "Ei kaljonki", style: "Not Lager")
+      beer = FactoryGirl.create(:beer, name: "Kaljonki", style:@style1)
+      beer2 = FactoryGirl.create(:beer, name: "Ei kaljonki", style:@style2)
       FactoryGirl.create(:rating, score:30, beer:beer, user:@user)
       FactoryGirl.create(:rating, score:40, beer:beer, user:@user)
       FactoryGirl.create(:rating, score:30, beer:beer2, user:@user)
@@ -23,8 +25,8 @@ describe "User" do
       it "can see user's favorite brewery correctly" do
         brewery = FactoryGirl.create(:brewery, name: "Paras")
         brewery2 = FactoryGirl.create(:brewery, name: "Huono")
-        beer = FactoryGirl.create(:beer, name: "Kaljonki", brewery:brewery, style: "Lager")
-        beer2 = FactoryGirl.create(:beer, name: "Ei kaljonki", brewery:brewery2, style: "Not Lager")
+        beer = FactoryGirl.create(:beer, name: "Kaljonki", brewery:brewery, style:@style1)
+        beer2 = FactoryGirl.create(:beer, name: "Ei kaljonki", brewery:brewery2, style:@style2)
         FactoryGirl.create(:rating, score:30, beer:beer, user:@user)
         FactoryGirl.create(:rating, score:40, beer:beer, user:@user)
         FactoryGirl.create(:rating, score:30, beer:beer2, user:@user)

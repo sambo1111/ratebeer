@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Beer, type: :model do
   describe "is saved" do
     it "if it has a name and a date set" do
-      beer = Beer.create name:"testbeer", style:"teststyle"
+      style = FactoryGirl.create :style
+      beer = Beer.create name:"testbeer", style:style
       expect(beer).to be_valid
       expect(Beer.count).to eq(1)
     end
@@ -11,7 +12,8 @@ RSpec.describe Beer, type: :model do
 
   describe "is not saved" do
     it "if it has no name" do
-      beer = Beer.create style:"teststyle"
+      style = FactoryGirl.create :style
+      beer = Beer.create style:style
       expect(beer).not_to be_valid
       expect(Beer.count).to eq(0)
     end

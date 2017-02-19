@@ -68,9 +68,12 @@ RSpec.describe User, type: :model do
     end
 
     it "is the style with the highest average rating" do
-      beer1 = FactoryGirl.create(:beer, style:"Not Lager")
-      beer2 = FactoryGirl.create(:beer, style:"Not Lager")
-      beer3 = FactoryGirl.create(:beer, style:"Lager")
+      style1 = FactoryGirl.create :style
+      style2 = FactoryGirl.create :style, name:"Not Lager"
+
+      beer1 = FactoryGirl.create(:beer, style:style2)
+      beer2 = FactoryGirl.create(:beer, style:style2)
+      beer3 = FactoryGirl.create(:beer, style:style1)
 
       FactoryGirl.create(:rating, score:20, beer:beer1, user:user)
       FactoryGirl.create(:rating, score:5, beer:beer2, user:user)

@@ -4,7 +4,7 @@
   <h1> <%= @user.username %> </h1>
 </p>
 <p>
-  <% if @user.ratings.count == 0%>
+  <% if @user.ratings.count < 1%>
     user has no ratings
   <% else %>
     has made <%= pluralize(@user.ratings.count, 'rating') %>

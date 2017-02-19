@@ -8,6 +8,11 @@
 <% end %>
 
 <% if @places %>
+  <h3> <%= "Current weather in #{params[:city]}" %> </h3>
+  <% weather = WeatherApi.fetch_weather(params[:city]) %>
+  <p> Temperature <%= weather["current"]["temp_c"] %> Celcius </p>
+  <p> Wind <%= weather["current"]["wind_kph"] %>/kph </p>
+
   <table>
     <thead>
       <td> name </td>
@@ -17,7 +22,7 @@
     </thead>
     <% @places.each do |place| %>
       <tr>
-        <td> <%= link_to place.name places_path(place)%> </td>
+        <td> <%= link_to place.name, place_path(place.id)%> </td>
         <% Place.rendered_fields.each do |f| %>
           <td><%= place.send(f) %></td>
         <% end %>
