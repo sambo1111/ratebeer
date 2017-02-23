@@ -4,8 +4,12 @@ class Brewery < ActiveRecord::Base
 
 	has_many :beers, dependent: :destroy
 	has_many :ratings, through: :beers
+
 	validates :name, length: {minimum: 1}
 	validate :founded_cant_be_in_future
+
+	scope :active, -> {where active:true}
+	scope :retired, -> {where active:[nil, false]}
 
 	def print_report
 		puts name
@@ -24,7 +28,12 @@ class Brewery < ActiveRecord::Base
 		 end
 	end
 
-	def getname
+	def self.top(n)
+		sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating||0) }
+		top_n = sorted_by_rating_in_desc_order[0,n]
+	end
+
+	def to_s
 		self.name
 	end
 end

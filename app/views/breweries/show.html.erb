@@ -1,7 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <h2> <%= @brewery.name %> </h2>
+  <h2> <%= @brewery.name %>
+       <% if not @brewery.active  %>
+        <span class="label label-info">retired</span>
+       <% end %>
+  </h2>
 </p>
 
 <p>
@@ -14,9 +18,6 @@
   <% end %>
 </p>
 
-<%= link_to('Edit', edit_brewery_path(@brewery)) if current_user %> |
-<%= link_to 'Back', breweries_path %>
-
 <p>
   <% if @brewery.ratings.count == 0 %>
   This brewery has no ratings.
@@ -25,4 +26,5 @@
   <%end%>
 </p>
 
-<p> <%= link_to 'List of beers', beers_path %> </p>
+<%= link_to('Edit', edit_brewery_path(@brewery), class:"btn btn-primary") if current_user %>
+<%= link_to('Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger") if current_user %>

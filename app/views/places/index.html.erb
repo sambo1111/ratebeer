@@ -4,7 +4,7 @@
 
 <%= form_tag places_path do %>
   city <%= text_field_tag :city, params[:city] %>
-  <%= submit_tag "Search" %>
+  <%= submit_tag "Search", class:"btn btn-success" %>
 <% end %>
 
 <% if @places %>
@@ -13,7 +13,7 @@
   <p> Temperature <%= weather["current"]["temp_c"] %> Celcius </p>
   <p> Wind <%= weather["current"]["wind_kph"] %>/kph </p>
 
-  <table>
+  <table class="table table-hover">
     <thead>
       <td> name </td>
       <% Place.rendered_fields.each do |f| %>

@@ -20,5 +20,3 @@
   <p> Style <br> <%= f.select :style_id, options_from_collection_for_select(@styles, :id, :to_s, selected:@beer.style_id) %> </p>
   <p> <%= f.submit %> </p>
 <% end %>
-
-<%= link_to 'Back', beers_path %>

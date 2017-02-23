@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def favorite_brewery
-    favorite_from_collection(self.ratings.group_by{|rat| rat.beer.brewery}).getname
+    favorite_from_collection(self.ratings.group_by{|rat| rat.beer.brewery})
   end
 
   def favorite_style
@@ -47,5 +47,10 @@ class User < ActiveRecord::Base
       sum = sum + e.score
     end
     sum = sum / r.count
+  end
+
+  def self.top(n)
+    sorted_by_rating_in_desc_order = User.all.sort_by{ |u| -(u.ratings.count||0) }
+		top_n = sorted_by_rating_in_desc_order[0,n]
   end
 end
