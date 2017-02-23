@@ -16,7 +16,7 @@
   <% end %>
 
   <p> Name <br> <%= f.text_field :name %> </p>
-  <p> Brewery <br> <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :getname, selected:@beer.brewery_id) %> </p>
+  <p> Brewery <br> <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :to_s, selected:@beer.brewery_id) %> </p>
   <p> Style <br> <%= f.select :style_id, options_from_collection_for_select(@styles, :id, :to_s, selected:@beer.style_id) %> </p>
   <p> <%= f.submit %> </p>
 <% end %>
