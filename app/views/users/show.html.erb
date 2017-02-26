@@ -1,7 +1,9 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <h1> <%= @user.username %> </h1>
+  <h1> <%= @user.username %>
+    <% if @user.banned? == true  %>
+      <span class="label label-info">frozen</span>
+  <% end %>
+  </h1>
 </p>
 <p>
   <% if @user.ratings.count < 1%>
@@ -37,4 +39,12 @@
 <% if @user == current_user %>
   <%= link_to 'Edit', edit_user_path(@user), class:"btn btn-primary" %>
   <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+<% end %>
+
+<% if current_user.admin? == true and @user.admin? == false %>
+  <% if @user.banned? == true %>
+    <%= link_to "reactivate", toggle_ban_user_path(@user.id), method: :post, class: "btn btn-danger" %>
+  <% else %>
+    <%= link_to "freeze", toggle_ban_user_path(@user.id), method: :post, class: "btn btn-danger" %>
+  <% end %>
 <% end %>

@@ -20,4 +20,12 @@ Rails.application.routes.draw do
   get 'places', to: 'places#index'
   post 'places', to: 'places#search'
 
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
+
+  resources :users do
+    post 'toggle_ban', on: :member
+  end
+
 end

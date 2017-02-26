@@ -7,11 +7,15 @@ class SessionsController < ApplicationController
 
     #hae annettua usernamea vastaava käyttäjä kannasta
     user = User.find_by username: params[:username]
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to user, notice: "Welcome back!"
+    if user.banned? == true
+      redirect_to :back, notice: "You are banned, contact an administrator."
     else
-      redirect_to :back, notice: "Invalid username or password!"
+      if user && user.authenticate(params[:password])
+        session[:user_id] = user.id
+        redirect_to user, notice: "Welcome back!"
+      else
+        redirect_to :back, notice: "Invalid username or password!"
+      end
     end
   end
 

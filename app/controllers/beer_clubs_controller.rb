@@ -1,6 +1,7 @@
 class BeerClubsController < ApplicationController
   before_action :set_beer_club, only: [:show, :edit, :update, :destroy]
   before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_is_admin, only: [:destroy]
 
   # GET /beer_clubs
   # GET /beer_clubs.json
@@ -10,15 +11,25 @@ class BeerClubsController < ApplicationController
 
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
+
+  #def show
+  #  if current_user
+  #    if Membership.find_by(@beer_club.id, current_user.id)
+  #      @membership = Membership.find_by(@beer_club.id, current_user.id)
+  #    else
+  #      @membership = Membership.new
+  #      @membership.beer_club = @beer_club
+  #      @membership.user = current_user
+  #    end
+  #  end
+  #end
+
   def show
-    if current_user
-      if Membership.find_by(@beer_club.id, current_user.id)
-        @membership = Membership.find_by(@beer_club.id, current_user.id)
-      else
-        @membership = Membership.new
-        @membership.beer_club = @beer_club
-        @membership.user = current_user
-      end
+    if current_user.is_member_of? @beer_club
+      @membership = current_user.memberships.find{ |m| m.beer_club == @beer_club }
+    else
+      @membership = Membership.new
+      @membership.beer_club = @beer_club
     end
   end
 
