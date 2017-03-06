@@ -36,15 +36,16 @@
 
 </ul>
 
-<% if @user == current_user %>
-  <%= link_to 'Edit', edit_user_path(@user), class:"btn btn-primary" %>
-  <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
-<% end %>
-
-<% if current_user.admin? == true and @user.admin? == false %>
-  <% if @user.banned? == true %>
-    <%= link_to "reactivate", toggle_ban_user_path(@user.id), method: :post, class: "btn btn-danger" %>
-  <% else %>
-    <%= link_to "freeze", toggle_ban_user_path(@user.id), method: :post, class: "btn btn-danger" %>
+<% if current_user %>
+  <% if @user == current_user %>
+    <%= link_to 'Edit', edit_user_path(@user), class:"btn btn-primary" %>
+    <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
   <% end %>
+    <% if current_user.admin? == true and @user.admin? == false %>
+      <% if @user.banned? == true %>
+        <%= link_to "reactivate", toggle_ban_user_path(@user.id), method: :post, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "freeze", toggle_ban_user_path(@user.id), method: :post, class: "btn btn-danger" %>
+      <% end %>
+    <% end %>
 <% end %>

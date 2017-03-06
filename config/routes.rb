@@ -20,8 +20,15 @@ Rails.application.routes.draw do
   get 'places', to: 'places#index'
   post 'places', to: 'places#search'
 
+  get 'beerlist', to:'beers#list'
+  get 'brewerylist', to:'breweries#list'
+
   resources :breweries do
     post 'toggle_activity', on: :member
+  end
+
+  resources :memberships do
+    post 'toggle_confirmed', on: :member
   end
 
   resources :users do

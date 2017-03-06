@@ -15,6 +15,7 @@ class MembershipsController < ApplicationController
   # GET /memberships/new
   def new
     @membership = Membership.new
+    @membership.confirmed = false
     @beer_clubs = BeerClub.all
   end
 
@@ -29,7 +30,7 @@ class MembershipsController < ApplicationController
     @membership.user_id = current_user.id if current_user
     if @membership.save
       current_user.memberships << @membership
-      redirect_to beer_club_path(membership_params[:beer_club_id]), :notice => "#{current_user.username}, welcome to the club!"
+      redirect_to beer_club_path(membership_params[:beer_club_id]), :notice => "#{current_user.username}, application sent!"
     else
       @beer_clubs = BeerClub.all
       render :new
@@ -48,6 +49,13 @@ class MembershipsController < ApplicationController
         format.json { render json: @membership.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def toggle_confirmed
+    membership = Membership.find(params[:id])
+    membership.update_attribute :confirmed, (not membership.confirmed)
+
+    redirect_to :back, notice:"new member has been accepted"
   end
 
   # DELETE /memberships/1
